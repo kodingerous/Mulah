@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table Calculation</title>
+    <script>
+        // Define Table 1
+        var table1 = {
+            "A1": 41,
+            "A2": 18,
+            "A3": 21,
+            "A4": 63,
+            "A5": 2,
+            "A6": 53,
+            "A7": 5,
+            "A8": 57,
+            "A9": 60,
+            "A10": 93,
+            "A11": 28,
+            "A12": 3,
+            "A13": 90,
+            "A14": 39,
+            "A15": 80,
+            "A16": 88,
+            "A17": 49,
+            "A18": 60,
+            "A19": 26,
+            "A20": 28
+        };
+
+        // Define Table 2
+        var table2 = {
+            "Alpha": "A5 + A20",
+            "Beta": "A15 / A7",
+            "Charlie": "A13 * A12"
+        };
+
+        // Function to calculate the expression given the variables
+        function calculateExpression(expression, variables) {
+            // Replace the variable names with their respective values
+            for (var variable in variables) {
+                expression = expression.replace(new RegExp(variable, 'g'), variables[variable]);
+            }
+            
+            // Evaluate and return the result
+            return eval(expression);
+        }
+
+        // Calculate values in Table 2
+        var table2Values = {};
+        for (var category in table2) {
+            table2Values[category] = calculateExpression(table2[category], table1);
+        }
+
+        // Display the calculated values in Table 2
+        window.onload = function() {
+            var table2Body = document.getElementById("table2-body");
+
+            for (var category in table2Values) {
+                var value = table2Values[category];
+                var row = document.createElement("tr");
+                var categoryCell = document.createElement("td");
+                var valueCell = document.createElement("td");
+                categoryCell.textContent = category;
+                valueCell.textContent = value;
+                row.appendChild(categoryCell);
+                row.appendChild(valueCell);
+                table2Body.appendChild(row);
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Table Calculation</h1>
+
+    <h2>Table 1</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Index #</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A1</td>
+                <td>41</td>
+            </tr>
+            <tr>
+                <td>A2</td>
+                <td>18</td>
+            </tr>
+            <tr>
+                <td>A3</td>
+                <td>21</td>
+            </tr>
+            <!-- Add more rows for Table 1 values -->
+        </tbody>
+    </table>
+
+    <h2>Table 2</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody id="table2-body">
+            <!-- The calculated values in Table 2 will be inserted here dynamically -->
+        </tbody>
+    </table>
+</body>
+</html>
